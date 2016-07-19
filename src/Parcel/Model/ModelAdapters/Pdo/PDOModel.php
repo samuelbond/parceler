@@ -72,7 +72,7 @@ class PDOModel implements ParcelModelInterface
 
     public function createParcelCharge(ParcelCharges $parcelCharge)
     {
-        $stmt = $this->connection->prepare("INSERT INTO parcelcharges VALUES (:country, :defaultcharge, :weightcharge, :haszonetariff)");
+        $stmt = $this->connection->prepare("INSERT INTO parcelcharges VALUES (null, :country, :defaultcharge, :weightcharge, :haszonetariff)");
         $stmt->bindParam(":country", $country);
         $stmt->bindParam(":defaultcharge", $defaultParcelCharge);
         $stmt->bindParam(":weightcharge", $weightCharge);
@@ -119,7 +119,7 @@ class PDOModel implements ParcelModelInterface
 
     public function createParcelSchedule(ParcelSchedules $parcelSchedule)
     {
-        $stmt = $this->connection->prepare("INSERT INTO parcelschedules VALUES (:pickupdate, :country)");
+        $stmt = $this->connection->prepare("INSERT INTO parcelschedules VALUES (null, :pickupdate, :country)");
         $stmt->bindParam(":pickupdate", $pickUpDate);
         $stmt->bindParam(":country", $country);
         $pickUpDate = $parcelSchedule->getPickupdate();

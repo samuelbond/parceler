@@ -106,7 +106,7 @@ class PDOModel implements ZoneModelInterface
 
     public function  createPostZone(PostZone $zone)
     {
-        $stmt = $this->connection->prepare("INSERT INTO postzone VALUES (:name)");
+        $stmt = $this->connection->prepare("INSERT INTO postzone VALUES (null, :name)");
         $stmt->bindParam(":name", $name);
         $name = $zone->getName();
         $stmt->execute();
