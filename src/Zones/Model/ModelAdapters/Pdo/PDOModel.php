@@ -31,20 +31,6 @@ class PDOModel implements ZoneModelInterface
         $this->connection = Config::getPDOConnection(false);
     }
 
-    public function getZoneCharge($postZone)
-    {
-        $stmt = $this->connection->prepare("SELECT * FROM zonecharge WHERE postzone = :postzone");
-        $stmt->bindParam(":postzone", $postZone);
-        $stmt->execute();
-        return $stmt->fetchObject("Platitech\\Parceler\\Zones\\Entities\\ZoneCharge");
-    }
-
-    public function getAllZoneCharges()
-    {
-        $stmt = $this->connection->prepare("SELECT * FROM zonecharge");
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Zones\\Entities\\ZoneCharge");
-    }
 
     public function getPostRegion($postRegion)
     {
@@ -77,21 +63,19 @@ class PDOModel implements ZoneModelInterface
         return $stmt->fetchObject("Platitech\\Parceler\\Zones\\Entities\\PostZone");
     }
 
+    public function getPostZoneByCountry($countryCode)
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM postzone WHERE country = :country");
+        $stmt->bindParam(":country", $countryCode);
+        $stmt->execute();
+        return $stmt->fetchObject("Platitech\\Parceler\\Zones\\Entities\\PostZone");
+    }
+
     public function getAllPostZones()
     {
         $stmt = $this->connection->prepare("SELECT * FROM postzone");
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Zones\\Entities\\PostZone");
-    }
-
-    public function createZoneCharge(ZoneCharge $charge)
-    {
-        $stmt = $this->connection->prepare("INSERT INTO zonecharge VALUES (:postzone, :zonecharge)");
-        $stmt->bindParam(":postzone", $postZone);
-        $stmt->bindParam(":zonecharge", $zoneCharge);
-        $postZone = $charge->getPostzone();
-        $zoneCharge = $charge->getZonecharge();
-        $stmt->execute();
     }
 
     public function createPostRegion(PostRegion $region)
@@ -106,22 +90,16 @@ class PDOModel implements ZoneModelInterface
 
     public function  createPostZone(PostZone $zone)
     {
-        $stmt = $this->connection->prepare("INSERT INTO postzone VALUES (null, :name)");
+        $stmt = $this->connection->prepare("INSERT INTO postzone VALUES (null, :name, :country, :charge)");
         $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":country", $country);
+        $stmt->bindParam(":charge", $charge);
         $name = $zone->getName();
+        $country = $zone->getCountry();
+        $charge = $zone->getZonecharge();
         $stmt->execute();
     }
 
-    public function updateZoneCharge(ZoneCharge $charge)
-    {
-        $stmt = $this->connection->prepare("UPDATE zonecharge set postzone = :postzone, zonecharge = :zonecharge WHERE postzone = :pzone ");
-        $stmt->bindParam(":postzone", $postZone);
-        $stmt->bindParam(":zonecharge", $zoneCharge);
-        $stmt->bindParam(":pzone", $postZone);
-        $postZone = $charge->getPostzone();
-        $zoneCharge = $charge->getZonecharge();
-        $stmt->execute();
-    }
 
     public function updatePostRegion(PostRegion $region)
     {
@@ -136,11 +114,15 @@ class PDOModel implements ZoneModelInterface
 
     public function  updatePostZone(PostZone $zone)
     {
-        $stmt = $this->connection->prepare("UPDATE postzone set name = :name WHERE id = :id");
+        $stmt = $this->connection->prepare("UPDATE postzone set name = :name, country = :country, zonecharge= :charge WHERE id = :id");
         $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":country", $country);
+        $stmt->bindParam(":charge", $charge);
         $stmt->bindParam(":id", $id);
         $name = $zone->getName();
         $id = $zone->getId();
+        $country = $zone->getCountry();
+        $charge = $zone->getZonecharge();
         $stmt->execute();
     }
 
@@ -150,21 +132,11 @@ class PDOModel implements ZoneModelInterface
         $stmt1->bindParam(":postzone", $id);
         $id = $postZone->getId();
         $stmt1->execute();
-        $stmt2 = $this->connection->prepare("DELETE FROM zonecharge WHERE postzone = :postzone");
-        $stmt2->bindParam(":postzone", $id);
+        $stmt2 = $this->connection->prepare("DELETE FROM postzone WHERE id = :id");
+        $stmt2->bindParam(":id", $id);
         $stmt2->execute();
-        $stmt3 = $this->connection->prepare("DELETE FROM postzone WHERE id = :id");
-        $stmt3->bindParam(":id", $id);
-        $stmt3->execute();
     }
 
-    public function removeZoneCharge(ZoneCharge $charge)
-    {
-        $stmt = $this->connection->prepare("DELETE FROM zonecharge WHERE postzone = :postzone");
-        $stmt->bindParam(":postzone", $id);
-        $id = $charge->getPostzone();
-        $stmt->execute();
-    }
 
     public function removePostRegion(PostRegion $region)
     {

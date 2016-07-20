@@ -14,6 +14,8 @@ class PostZone
 {
     private $id;
     private $name;
+    private $country;
+    private $zonecharge;
 
     /**
      * @return mixed
@@ -45,6 +47,38 @@ class PostZone
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZonecharge()
+    {
+        return $this->zonecharge;
+    }
+
+    /**
+     * @param mixed $zonecharge
+     */
+    public function setZonecharge($zonecharge)
+    {
+        $this->zonecharge = $zonecharge;
     }
 
 

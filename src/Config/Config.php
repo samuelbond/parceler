@@ -39,6 +39,10 @@ class Config
         return self::$PDO_CONN;
     }
 
+    public static function setPDOConnection($connection){
+        self::$PDO_CONN = $connection;
+    }
+
     /**
      * @return mixed
      */

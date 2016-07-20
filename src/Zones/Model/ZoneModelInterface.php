@@ -17,13 +17,6 @@ use Platitech\Parceler\Zones\Entities\ZoneCharge;
 interface ZoneModelInterface
 {
     /**
-     * Create new Zone Charge
-     * @param ZoneCharge $charge
-     * @return void
-     */
-    public function createZoneCharge(ZoneCharge $charge);
-
-    /**
      * Create new Post Region
      * @param PostRegion $region
      * @return void
@@ -36,13 +29,6 @@ interface ZoneModelInterface
      * @return void
      */
     public function  createPostZone(PostZone $zone);
-
-    /**
-     * Update Zone Charge
-     * @param ZoneCharge $charge
-     * @return void
-     */
-    public function updateZoneCharge(ZoneCharge $charge);
 
     /**
      * Update Post Region
@@ -58,18 +44,6 @@ interface ZoneModelInterface
      */
     public function  updatePostZone(PostZone $zone);
 
-    /**
-     * Get zone charge for a given post zone
-     * @param $postZone
-     * @return ZoneCharge
-     */
-    public function getZoneCharge($postZone);
-
-    /**
-     * Get all zone charges
-     * @return Array
-     */
-    public function getAllZoneCharges();
 
     /**
      * Get a given post region
@@ -99,6 +73,13 @@ interface ZoneModelInterface
     public function getPostZoneByName($name);
 
     /**
+     * Gets a given post zone by country
+     * @param $countryCode
+     * @return PostZone
+     */
+    public function getPostZoneByCountry($countryCode);
+
+    /**
      * Gets all post zone
      * @return Array
      */
@@ -109,12 +90,6 @@ interface ZoneModelInterface
      * @return void
      */
     public function removePostZone(PostZone $postZone);
-
-    /**
-     * @param ZoneCharge $charge
-     * @return void
-     */
-    public function removeZoneCharge(ZoneCharge $charge);
 
     /**
      * @param PostRegion $region
