@@ -14,6 +14,7 @@ use Platitech\Parceler\Parcel\Entities\Countries;
 use Platitech\Parceler\Parcel\Entities\ParcelCharges;
 use Platitech\Parceler\Parcel\Entities\ParcelOrders;
 use Platitech\Parceler\Parcel\Entities\ParcelSchedules;
+use Platitech\Parceler\Parcel\Entities\ParcelTypes;
 
 interface ParcelModelInterface
 {
@@ -169,6 +170,29 @@ interface ParcelModelInterface
      * @return void
      */
     public function updateParcelOrderStatus($id, $status);
+
+    /**
+     * @param ParcelTypes $type
+     * @return void
+     */
+    public function addParcelType(ParcelTypes $type);
+
+    /**
+     * @param $type
+     * @return ParcelTypes
+     */
+    public function getParcelType($type);
+
+    /**
+     * @return array
+     */
+    public function getAllParcelType();
+
+    /**
+     * @param ParcelTypes $type
+     * @return void
+     */
+    public function removeParcelType(ParcelTypes $type);
 
 
 }

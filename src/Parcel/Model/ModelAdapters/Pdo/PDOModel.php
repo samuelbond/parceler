@@ -15,6 +15,7 @@ use Platitech\Parceler\Parcel\Entities\Countries;
 use Platitech\Parceler\Parcel\Entities\ParcelCharges;
 use Platitech\Parceler\Parcel\Entities\ParcelOrders;
 use Platitech\Parceler\Parcel\Entities\ParcelSchedules;
+use Platitech\Parceler\Parcel\Entities\ParcelTypes;
 use Platitech\Parceler\Parcel\Model\ParcelModelInterface;
 
 class PDOModel implements ParcelModelInterface
@@ -311,6 +312,37 @@ class PDOModel implements ParcelModelInterface
         $stmt = $this->connection->prepare("UPDATE parcelorders SET status = :status WHERE id = :id");
         $stmt->bindParam(":status", $status);
         $stmt->bindParam(":id", $id);
+        $stmt->execute();
+    }
+
+    public function addParcelType(ParcelTypes $type)
+    {
+        $stmt = $this->connection->prepare("INSERT INTO parceltypes VALUES (:parceltype)");
+        $stmt->bindParam(":parceltype", $parcelType);
+        $parcelType = $type->getParceltype();
+        $stmt->execute();
+    }
+
+    public function getParcelType($type)
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM parceltypes WHERE parceltype = :parceltype");
+        $stmt->bindParam(":parceltype", $type);
+        $stmt->execute();
+        return $stmt->fetchObject("Platitech\\Parceler\\Parcel\\Entities\\ParcelTypes");
+    }
+
+    public function getAllParcelType()
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM parceltypes");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Parcel\\Entities\\ParcelTypes");
+    }
+
+    public function removeParcelType(ParcelTypes $type)
+    {
+        $stmt = $this->connection->prepare("DELETE FROM parceltypes WHERE parceltype = :parceltype");
+        $stmt->bindParam(":parceltype", $parcelType);
+        $parcelType = $type->getParceltype();
         $stmt->execute();
     }
 
