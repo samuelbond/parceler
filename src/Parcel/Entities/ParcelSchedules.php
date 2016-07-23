@@ -14,6 +14,7 @@ class ParcelSchedules
 {
     private $id;
     private $pickupdate;
+    private $maxweight;
     private $country;
 
     /**
@@ -63,6 +64,23 @@ class ParcelSchedules
     {
         $this->country = $country;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxweight()
+    {
+        return $this->maxweight;
+    }
+
+    /**
+     * @param mixed $maxweight
+     */
+    public function setMaxweight($maxweight)
+    {
+        $this->maxweight = $maxweight;
+    }
+
 
 
 }

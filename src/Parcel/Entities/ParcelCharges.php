@@ -16,6 +16,8 @@ class ParcelCharges
     private $country;
     private $defaultcharge;
     private $weightcharge;
+    private $specialpackagingcharge;
+    private $refrigeratecharge;
     private $haszonetariff;
 
     /**
@@ -96,6 +98,38 @@ class ParcelCharges
     public function setHaszonetariff($haszonetariff)
     {
         $this->haszonetariff = $haszonetariff;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecialpackagingcharge()
+    {
+        return $this->specialpackagingcharge;
+    }
+
+    /**
+     * @param mixed $specialpackagingcharge
+     */
+    public function setSpecialpackagingcharge($specialpackagingcharge)
+    {
+        $this->specialpackagingcharge = $specialpackagingcharge;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRefrigeratecharge()
+    {
+        return $this->refrigeratecharge;
+    }
+
+    /**
+     * @param mixed $refrigeratecharge
+     */
+    public function setRefrigeratecharge($refrigeratecharge)
+    {
+        $this->refrigeratecharge = $refrigeratecharge;
     }
 
 

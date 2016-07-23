@@ -14,6 +14,7 @@ class PostRegion
 {
     private $name;
     private $postzone;
+    private $postzoneName;
 
     /**
      * @return mixed
@@ -45,6 +46,22 @@ class PostRegion
     public function setPostzone($postzone)
     {
         $this->postzone = $postzone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostzoneName()
+    {
+        return $this->postzoneName;
+    }
+
+    /**
+     * @param mixed $postzoneName
+     */
+    public function setPostzoneName($postzoneName)
+    {
+        $this->postzoneName = $postzoneName;
     }
 
 

@@ -13,7 +13,6 @@ namespace Platitech\Parceler\Zones\Model\ModelAdapters\Pdo;
 use Platitech\Parceler\Config\Config;
 use Platitech\Parceler\Zones\Entities\PostRegion;
 use Platitech\Parceler\Zones\Entities\PostZone;
-use Platitech\Parceler\Zones\Entities\ZoneCharge;
 use Platitech\Parceler\Zones\Model\ZoneModelInterface;
 
 class PDOModel implements ZoneModelInterface
@@ -34,7 +33,7 @@ class PDOModel implements ZoneModelInterface
 
     public function getPostRegion($postRegion)
     {
-        $stmt = $this->connection->prepare("SELECT * FROM postregion WHERE postzone = :postzone");
+        $stmt = $this->connection->prepare("SELECT name, postzone, (SELECT name FROM postzone WHERE id = :postzone) AS postzoneName FROM postregion WHERE postzone = :postzone");
         $stmt->bindParam(":postzone", $postRegion);
         $stmt->execute();
         return $stmt->fetchObject("Platitech\\Parceler\\Zones\\Entities\\PostRegion");
@@ -42,7 +41,7 @@ class PDOModel implements ZoneModelInterface
 
     public function getAllPostRegion()
     {
-        $stmt = $this->connection->prepare("SELECT * FROM postregion");
+        $stmt = $this->connection->prepare("SELECT name, postzone, (SELECT name FROM postzone WHERE id = pr.postzone ) AS postzoneName FROM postregion pr");
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Zones\\Entities\\PostRegion");
     }

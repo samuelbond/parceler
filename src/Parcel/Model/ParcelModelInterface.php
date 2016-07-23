@@ -12,6 +12,7 @@ namespace Platitech\Parceler\Parcel\Model;
 
 use Platitech\Parceler\Parcel\Entities\Countries;
 use Platitech\Parceler\Parcel\Entities\ParcelCharges;
+use Platitech\Parceler\Parcel\Entities\ParcelOrders;
 use Platitech\Parceler\Parcel\Entities\ParcelSchedules;
 
 interface ParcelModelInterface
@@ -126,6 +127,48 @@ interface ParcelModelInterface
      * @return void
      */
     public function updateParcelSchedule(ParcelSchedules $parcelSchedule);
+
+    /**
+     * @param ParcelOrders $order
+     * @return void
+     */
+    public function createParcelOrder(ParcelOrders $order);
+
+    /**
+     * @param $pickupDateId
+     * @return array
+     */
+    public function getParcelOrderByPickUpDate($pickupDateId);
+
+    /**
+     * @param $orderId
+     * @return ParcelOrders
+     */
+    public function getParcelOrderById($orderId);
+
+    /**
+     * @param $email
+     * @return array
+     */
+    public function getParcelOrderByEmail($email);
+
+    /**
+     * @param $paymentRef
+     * @return ParcelOrders
+     */
+    public function getParcelOrderByPaymentReference($paymentRef);
+
+    /**
+     * @return array
+     */
+    public function getAllParcelOrder();
+
+    /**
+     * @param $id
+     * @param $status
+     * @return void
+     */
+    public function updateParcelOrderStatus($id, $status);
 
 
 }
