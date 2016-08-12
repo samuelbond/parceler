@@ -15,6 +15,7 @@ use Platitech\Parceler\Parcel\Entities\ParcelCharges;
 use Platitech\Parceler\Parcel\Entities\ParcelOrders;
 use Platitech\Parceler\Parcel\Entities\ParcelSchedules;
 use Platitech\Parceler\Parcel\Entities\ParcelTypes;
+use Platitech\Parceler\Parcel\Entities\PriceList;
 
 interface ParcelModelInterface
 {
@@ -194,5 +195,45 @@ interface ParcelModelInterface
      */
     public function removeParcelType(ParcelTypes $type);
 
+    /**
+     * @param PriceList $price
+     * @return void
+     */
+    public function addPrice(PriceList $price);
+
+    /**
+     * @param $id
+     * @return PriceList
+     */
+    public function getPriceById($id);
+
+    /**
+     * @param $weight
+     * @return PriceList
+     */
+    public function getPricesLessThanMaxWeight($weight);
+
+    /**
+     * @param $dimension
+     * @return PriceList
+     */
+    public function getPricesLessThanMaxDimension($dimension);
+
+    /**
+     * @return PriceList
+     */
+    public function getAllPrices();
+
+    /**
+     * @param PriceList $price
+     * @return void
+     */
+    public function removePriceFromList(PriceList $price);
+
+    /**
+     * @param PriceList $price
+     * @return void
+     */
+    public function updatePrice(PriceList $price);
 
 }

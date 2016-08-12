@@ -16,6 +16,7 @@ use Platitech\Parceler\Parcel\Entities\ParcelCharges;
 use Platitech\Parceler\Parcel\Entities\ParcelOrders;
 use Platitech\Parceler\Parcel\Entities\ParcelSchedules;
 use Platitech\Parceler\Parcel\Entities\ParcelTypes;
+use Platitech\Parceler\Parcel\Entities\PriceList;
 use Platitech\Parceler\Parcel\Model\ParcelModelInterface;
 
 class PDOModel implements ParcelModelInterface
@@ -344,6 +345,75 @@ class PDOModel implements ParcelModelInterface
         $stmt->bindParam(":parceltype", $parcelType);
         $parcelType = $type->getParceltype();
         $stmt->execute();
+    }
+
+    public function addPrice(PriceList $price)
+    {
+        $stmt = $this->connection->prepare("INSERT INTO pricelist VALUES (null, :dimensions, :weight, :price, :country)");
+        $stmt->bindParam(":dimensions", $dimensions);
+        $stmt->bindParam(":weight", $weight);
+        $stmt->bindParam(":price", $amount);
+        $stmt->bindParam(":country", $country);
+        $dimensions = $price->getMaxdimensions();
+        $weight = $price->getMaxweight();
+        $amount = $price->getPrice();
+        $country = $price->getCountry();
+        $stmt->execute();
+    }
+
+    public function getPriceById($id)
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM pricelist WHERE id = :id");
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetchObject("Platitech\\Parceler\\Parcel\\Entities\\PriceList");
+    }
+
+    public function getPricesLessThanMaxWeight($weight)
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM pricelist WHERE maxweight >= :weight");
+        $stmt->bindParam(":weight", $weight);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Parcel\\Entities\\PriceList");
+    }
+
+    public function getPricesLessThanMaxDimension($dimension)
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM pricelist WHERE maxdimensions >= :dimensions");
+        $stmt->bindParam(":dimensions", $dimension);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Parcel\\Entities\\PriceList");
+    }
+
+    public function removePriceFromList(PriceList $price)
+    {
+        $stmt = $this->connection->prepare("DELETE FROM pricelist WHERE id = :id");
+        $stmt->bindParam(":id", $id);
+        $id = $price->getId();
+        $stmt->execute();
+    }
+
+    public function updatePrice(PriceList $price)
+    {
+        $stmt = $this->connection->prepare("UPDATE pricelist set maxdimensions = :dimensions, maxweight = :weight, price = :price, country = :country WHERE id = :id");
+        $stmt->bindParam(":dimensions", $dimensions);
+        $stmt->bindParam(":weight", $weight);
+        $stmt->bindParam(":price", $amount);
+        $stmt->bindParam(":country", $country);
+        $stmt->bindParam(":id", $id);
+        $dimensions = $price->getMaxdimensions();
+        $weight = $price->getMaxweight();
+        $amount = $price->getPrice();
+        $country = $price->getCountry();
+        $id = $price->getId();
+        $stmt->execute();
+    }
+
+    public function getAllPrices()
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM pricelist");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS,"Platitech\\Parceler\\Parcel\\Entities\\PriceList");
     }
 
 
